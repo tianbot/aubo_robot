@@ -4,15 +4,11 @@ project(aubo_planner)
 find_package(catkin REQUIRED COMPONENTS aubo_msgs  moveit_core moveit_ros_planning moveit_ros_planning_interface pluginlib cmake_modules)
 
 find_package(Boost REQUIRED system filesystem date_time thread)
+find_package(Eigen3 REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS roscpp std_msgs sensor_msgs
   control_msgs trajectory_msgs actionlib_msgs actionlib
   urdf industrial_msgs industrial_utils)
-
-if("$ENV{ROS_DISTRO}" STREQUAL "kinetic")
-    find_package(Eigen3 REQUIRED)
-    Message(STATUS "<<<<<<<<<<<<<<<<<<<<<<<<<Note: Find Eigen3 Package in aubo_planner for kinetic")
-endif()
 
 if("$ENV{ROS_DISTRO}" STREQUAL "indigo")
     find_package(Eigen REQUIRED)
@@ -53,7 +49,7 @@ endif()
 #set(CMAKE_CXX_COMPILER "clang++")
 #set(CMAKE_C_COMPILER "clang")
 
-include_directories(include  ${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS})
 
 if("$ENV{ROS_DISTRO}" STREQUAL "kinetic")
     include_directories(SYSTEM ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
